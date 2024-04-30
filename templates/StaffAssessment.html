@@ -1,0 +1,83 @@
+{%extends 'Teaching-staff.html'%}
+
+{%block staffBlock%}
+
+<div class="container">
+
+    <h2> {{ Aname }} </h2>
+
+
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> Question ID</th>
+        <th> Question</th>
+        <th> Answer</th>
+        <th> Check1</th>
+        <th> Check2</th>
+        <th> Check3</th>
+        <th> Feedback</th>
+        <th> Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for questions in data1 %}
+      <tr>
+      <td> {{ questions['id'] }}</td>
+      <td> {{ questions['question'] }}</td>
+      <td> {{ questions['answer'] }}</td>
+      <td> {{ questions['check1'] }}</td>
+      <td> {{ questions['check2'] }}</td>
+      <td> {{ questions['check3'] }}</td>
+      <td> {{ questions['feedback'] }}</td>
+      <td> {{ questions['comment'] }}</td>
+    </tr>
+      {%endfor%}
+    </tbody>
+    </table>
+</div>
+{% if error %}
+<div class="alert alert-info">
+  {{ error }}
+</div>
+{% endif %}
+<div class="container">
+<h2> Question Type 1</h2>
+
+<h4>Add Data</h4>
+{% if data2 %}    
+<form method="POST" action="{{ url_for('newQuestion', get_id=data2) }}">
+    <input type='text' placeholder='Enter question' name='addquest' required value="{{ request.form['addquest'] }}">
+    <input type='text' placeholder='Enter answer' name='addans' required value="{{ request.form['addans'] }}">
+    <input type='text' placeholder='Enter check' name='addcheck1' required value="{{ request.form['addcheck1'] }}">
+    <input type='text' placeholder='Enter check' name='addcheck2' required value="{{ request.form['addcheck2'] }}">
+    <input type='text' placeholder='Enter check' name='addcheck3' value="{{ request.form['addcheck3'] }}">
+    <input type='text' placeholder='Enter feedback' name='addfeed' required value="{{ request.form['addfeed'] }}">
+    <input type='text' placeholder='Enter comment' name='addcomm' value="{{ request.form['addcomm'] }}">
+    <button type='submit' class="btn btn-success">Add</button>
+</form>
+
+<h4>Edit Data</h4>
+
+<form method="POST" action="{{ url_for('editQuestions', get_id=data2) }}">
+  <input type='number' placeholder='Enter question ID' required name='id' value="{{ request.form['id'] }}">
+  <input type='text' placeholder='Enter question' name='quest' value="{{ request.form['quest'] }}">
+  <input type='text' placeholder='Enter answer' name='ans' value="{{ request.form['ans'] }}">
+  <input type='text' placeholder='Enter check' name='check1' value="{{ request.form['check1'] }}">
+  <input type='text' placeholder='Enter check' name='check2' value="{{ request.form['check2'] }}">
+  <input type='text' placeholder='Enter check' name='check3' value="{{ request.form['check3'] }}">
+  <input type='text' placeholder='Enter feedback' name='feed' value="{{ request.form['feed'] }}">
+  <input type='text' placeholder='Enter comment' name='comm' value="{{ request.form['comm'] }}">
+  <button type='submit' class="btn btn-success">Edit</button>
+</form>
+
+<h4>Delete Data</h4>
+
+<form method="POST" action="{{ url_for('deleteQuestion', get_id=data2) }}">
+    <input type='text' placeholder='Enter question ID' name='deleteid' required value="{{ request.form['deleteid'] }}">
+    <button type='submit' class="btn btn-danger">Delete</button>
+</form>
+{%endif%}
+</div>
+
+{%endblock%}

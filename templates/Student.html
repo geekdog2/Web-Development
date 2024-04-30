@@ -1,0 +1,95 @@
+{%extends 'Home.html'%}
+
+{%block mainBlock%}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/Home">AAT</a>
+    </div>
+    <div class="collapse navbar-collapse" id="Navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/Home">Home</a></li>
+        <li><a href="{{ url_for('Student',username=username ) }}">Student</a></li>
+        <li><a href="{{ url_for('Statistics', username=username ) }}">Statistics</a></li>
+        <li><a href="{{ url_for('StudentAss', username=username ) }}">Results</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{%block studentBlock%}
+
+<div class="container">
+
+  <h2> Assessments</h2>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> Name</th>
+        <th> Date Created</th>
+        <th> Type</th>
+          <th> Attempt </th>
+        <th> Attempt Assessment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for assessments in data %}
+      <tr>
+        <td >
+        {{ assessments['name'] }}
+        </td>
+        <td> {{ assessments['created'] }}</td>
+        <td> {{ assessments['type'] }}</td>
+
+        <td><p>Click Count: <span class="click-count">0</span></p></td>
+
+        <td>
+          <a href="{{ url_for('StudentSpecificassessment', get_id=assessments['id'], username=username ) }}" id="click-link"> Start</a>
+          <a href="{{ url_for('Comment', get_id=assessments['id'],username=username) }}" id="click-link"> Comment</a>
+          <a href="{{ url_for('ViewComment', get_id=assessments['id'],username=username) }}" id="click-link"> ViewComment</a>
+        </td>
+      </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+ <script>
+        // 获取所有具有 class="click-link" 的链接元素
+        var links = document.querySelectorAll(".click-link");
+
+        // 遍历每个链接元素
+        links.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault(); // 阻止默认行为，以防止页面跳转
+
+                // 获取链接地址
+                var href = this.href;
+
+                // 发送 GET 请求到 Flask 服务器以记录点击并获取点击次数
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/record_click?link=" + encodeURIComponent(href), true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // 请求成功，更新页面上的点击次数
+                        var count = xhr.responseText;
+                        var clickCount = this.parentElement.parentElement.querySelector(".click-count");
+                        clickCount.textContent = count;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
+
+</div>
+
+{%endblock%}
+
+{%endblock%}

@@ -1,0 +1,21 @@
+{% extends 'Home.html' %}
+
+{% block mainBlock %}
+    <h1 style="text-align: center;">ViewComment</h1>
+    <div class="container">
+        {% for comment in data %}
+            <label name="username">{{ comment.username }}</label>
+            <label name="usertype">{{ comment.usertype }}</label>
+            <textarea class="form-control" name="content">{{ comment.content }}</textarea>
+            {% if comment in data1 %}
+                <a href="{{ url_for('Delete_Comment', get_id=comment.id,get_assId=comment.assessment_id, username=username) }}">Delete</a>
+            {% endif %}
+            <br/>
+            <br/>
+        {% endfor %}
+        <center>
+            <a href="{{ url_for('Student', username=username) }}">Back</a>
+        </center>
+    </div>
+
+{% endblock %}

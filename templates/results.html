@@ -1,0 +1,34 @@
+{%extends 'Student.html'%}
+
+{%block mainBlock%}
+{% if res != True%}
+<h1 style="text-align: center;">{{ data3 }}</h1>
+<div class="container">
+  <div class="alert alert-info"> You answered {{ data1 }} questions correctly.
+  Your final mark is {{ data2 }}.
+  </div>
+
+  <a href="{{ url_for('Student', username=username) }}">
+    <button class="btn btn-success"> Return </button> </a>
+</div>
+{% else %}
+
+<h1 style="text-align: center;">{{ data3 }}</h1>
+<div class="container">
+{% if alldata%}
+  <div class="alert alert-info"> You answered {{alldata['count']}} questions correctly.
+  Your final mark is {{ alldata['mark'] }}.
+  {%endif%}
+  </div>
+  {% for question in allques%}
+
+  <p ><strong>{{ question['question'] }}</strong></p>
+  <div class="alert alert-success"><p >{{ question['answer'] }}</p></div>
+  <div class="alert alert-info"><p >{{ question['feedback'] }}</p></div>
+  {%endfor%}
+</div>
+
+
+{%endif%}
+
+{%endblock%}

@@ -1,0 +1,35 @@
+{%extends 'Home.html'%}
+
+{%block mainBlock%}
+
+<div class="container col-sm-4">
+    <a href="/Home" class="btn btn-info" role="button">Return</a>  
+</div>
+
+<div class="container col-sm-4">
+  <form action='/Login' method='POST'>
+
+      <div class="form-group">
+        <label for="UserType">User Type:</label>
+        <div>
+          <select id="UserType" class="form-control" name="UserType">
+            <option>Student</option>
+            <option>Teaching-staff</option>
+          </select> 
+        </div>
+      </div>
+
+        <div class="form-group">
+          <label  for="Username">Username:</label>
+          <input type="text" class="form-control" id="Username" placeholder="Enter Username" required name="Username">
+        </div>
+
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="Password" placeholder="Enter Password" required name="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+</div>
+{%endblock%}

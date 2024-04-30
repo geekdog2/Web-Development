@@ -1,0 +1,162 @@
+{%extends 'Teaching-staff.html'%}
+
+{%block staffBlock%}
+
+<div class="container">
+
+  <table class="table table-hover">
+
+    <h2>Assessment Name</h2>
+
+    <thead>
+      <tr>
+        <th> Question ID</th>
+        <th> Question</th>
+        <th> Answer</th>
+        <th> Check1</th>
+        <th> Check2</th>
+        <th> Check3</th>
+        <th> Feedback</th>
+        <th> Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        <td>{{row[0]}}</td>
+        <td>{{row[1]}}</td>
+        <td>{{row[2]}}</td>
+        <td>{{row[3]}}</td>
+        <td>{{row[4]}}</td>
+        <td>{{row[5]}}</td>
+        <td>{{row[6]}}</td>
+        <td>{{row[7]}}</td>
+    </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+    <h2> Question Type 1</h2>
+
+    <h4>Add Data</h4>
+            
+    <form id="q1Add" onsubmit="return Add('question1')">
+        <input type='text' placeholder='Enter question' name='q1Quest' required>
+        <input type='text' placeholder='Enter answer' name='q1Ans' required>
+        <input type='text' placeholder='Enter check' name='q1Check1' required>
+        <input type='text' placeholder='Enter check' name='q1Check2'>
+        <input type='text' placeholder='Enter check' name='q1Check3'>
+        <input type='text' placeholder='Enter feedback' name='q1Feed' required>
+        <input type='text' placeholder='Enter comment' name='q1Comm'>
+        <button type='submit' class="btn btn-success">Add</button>
+    </form>
+    <span class='txt'></span>
+    
+    <h4>Edit Data</h4>
+    
+    <form id="q1Edit" onsubmit="return Edit('question1')">
+      <input type='number' placeholder='Enter question ID' name='q1ID' required>
+      <input type='text' placeholder='Enter question' name='q1Quest'>
+      <input type='text' placeholder='Enter answer' name='q1Ans'>
+      <input type='text' placeholder='Enter check' name='q1Check1'>
+      <input type='text' placeholder='Enter check' name='q1Check2'>
+      <input type='text' placeholder='Enter check' name='q1Check3'>
+      <input type='text' placeholder='Enter feedback' name='q1Feed'>
+      <input type='text' placeholder='Enter comment' name='q1Comm'>
+      <button type='submit' class="btn btn-success">Add</button>
+    </form>
+    <span class='txt'></span>
+    
+    <h4>Delete Data</h4>
+    
+    <form id="q1Delete" onsubmit="return Delete('question1')">
+        <input type='text' placeholder='Enter number' name='q1ID' required>
+        <button type='submit' class="btn btn-danger">Delete</button>
+    </form>
+    <span class='txt'></span>
+</div>
+
+<script>
+
+function Add(form) {
+  if (form == 'question1') {
+    var Quest = document.forms["q1Add"]["q1Quest"].value;
+    var Ans = document.forms["q1Add"]["q1Ans"].value;
+    var Check1 = document.forms["q1Add"]["q1Check1"].value;
+    var Check2 = document.forms["q1Add"]["q1Check2"].value;
+    var Check3 = document.forms["q1Add"]["q1Check3"].value;
+    var Feed = document.forms["q1Add"]["q1Feed"].value;
+    var Comm = document.forms["q1Add"]["q1Comm"].value;
+    var Label = 'question1'
+    var params = 'q1Quest='+Quest+'&q1Ans='+Ans+'&q1Feed='+Feed+'&q1Comm='+Comm+'&label='+Label+'&q1Check1='+Check1+'&q1Check2='+Check2+'&q1Check3='+Check3;
+  }
+  var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/Questions", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4) {
+        if (xhttp.status === 200) {
+            document.getElementsByClassName('txt')[0].innerHTML = xhttp.responseText;
+        } else {
+          console.error(xhttp.statusText);
+        }
+      }
+    };
+    xhttp.send(params);
+    return false;
+}
+
+function Edit(form) {
+  if (form == "question1") {
+    var ID = document.forms["q1Edit"]["q1ID"].value;
+    var Quest = document.forms["q1Edit"]["q1Quest"].value;
+    var Ans = document.forms["q1Edit"]["q1Ans"].value;
+    var Check1 = document.forms["q1Edit"]["q1Check1"].value;
+    var Check2 = document.forms["q1Edit"]["q1Check2"].value;
+    var Check3 = document.forms["q1Edit"]["q1Check3"].value;
+    var Feed = document.forms["q1Edit"]["q1Feed"].value;
+    var Comm = document.forms["q1Edit"]["q1Comm"].value;
+    var Label = 'question1'
+    var params = 'q1ID='+ID+'&q1Quest='+Quest+'&q1Ans='+Ans+'&q1Feed='+Feed+'&q1Comm='+Comm+'&label='+Label+'&q1Check1='+Check1+'&q1Check2='+Check2+'&q1Check3='+Check3;
+  }
+  var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", '/Questions', true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4) {
+        if (xhttp.status === 200) {
+            document.getElementsByClassName('txt')[1].innerHTML = xhttp.responseText;
+        } else {
+          console.error(xhttp.statusText);
+        }
+      }
+    };
+    xhttp.send(params);
+    return false;
+}
+
+function Delete(form) {
+  if (form == "question1") {
+    var ID = document.forms["q1Delete"]["q1ID"].value;
+    var Label = 'question1'
+    var params = 'q1ID='+ID+'&label='+Label;
+  }
+  var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", '/Questions', true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4) {
+        if (xhttp.status === 200) {
+            document.getElementsByClassName('txt')[2].innerHTML = xhttp.responseText;
+        } else {
+          console.error(xhttp.statusText);
+        }
+      }
+    };
+    xhttp.send(params);
+    return false;
+}
+
+</script>
+
+{%endblock%}

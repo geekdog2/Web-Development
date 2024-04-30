@@ -1,0 +1,50 @@
+{%extends 'Student.html'%}
+
+{%block mainBlock%}
+<h1 style="text-align: center;">{{ data2 }}</h1>
+<div class="container">
+
+    {% if data4 %}  
+    {% if data3 %}
+    <form method="POST" action="{{ url_for('studentResults', get_id=data4, ques_id=data3['id'], username=username) }}">
+        <p ><strong>{{ data3['question'] }}</strong></p>
+
+        <div>
+            <select class="form-control" name="ans" >
+              <option>{{ data3['check3'] }}</option>
+              <option>{{ data3['check1'] }}</option>
+              <option>{{ data3['answer'] }}</option>
+              <option>{{ data3['check2'] }}</option>
+            </select> 
+          </div>
+        {%endif%}
+        <br>
+        <div class="container">
+          {% if not data5%}
+          <button class="btn btn-success" type="submit"> Submit</button>
+          {%endif%}
+        </div>
+    </form>
+    {% if data5 and data6 != 'summative'%}
+    {% if data5 == "Correct"%}
+    <div class="alert alert-success">{{data5}}</div>
+    {% else %}
+    <div class="alert alert-danger">{{data5}}</div>
+    {%endif%}
+    <div class="alert alert-info"> 
+      <p>{{ data3['feedback'] }}</p>
+       <p> For more information view the resources provided by w3school <a href="https://www.w3schools.com/" class="label label-success" target="_blank">here</a></p>
+    </div>
+    <a href="{{ url_for('nextQuestion', get_id=data4, ques_id=data3['id'], username=username) }}">
+      <button class="btn btn-success"> Next </button> </a>
+    {%endif%}
+    {%endif%}
+    {% if data6 == 'summative'%}
+
+    <a href="{{ url_for('nextQuestion', get_id=data4, ques_id=data3['id'], username=username) }}">
+      <button class="btn btn-success"> Next </button> </a>
+
+    {%endif%}
+</div>
+
+{%endblock%}

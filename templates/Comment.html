@@ -1,0 +1,21 @@
+{% extends 'Home.html' %}
+
+{% block mainBlock %}
+    <h1 style="text-align: center;">Comment</h1>
+    <div class="container">
+        <form method="POST" action="{{ url_for('Comment', get_id=assessment_id,username=username) }}">
+            <input name="username" value="{{ username }}" hidden="hidden">
+            <input name="usertype" value="{{ usertype }}" hidden="hidden">
+            <div>
+                <label>Please enter the content</label>
+                <textarea class="form-control" name="content">
+            </textarea>
+            </div>
+            <br/>
+            <center>
+                <button type="submit"> Submit</button>
+            </center>
+        </form>
+    </div>
+
+{% endblock %}

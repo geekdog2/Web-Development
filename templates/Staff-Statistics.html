@@ -1,0 +1,117 @@
+{%extends 'Home.html'%}
+
+{%block mainBlock%}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/Home">AAT</a>
+    </div>
+    <div class="collapse navbar-collapse" id="Navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/Home">Home</a></li>
+        <li><a href="/Teaching-staff">Teaching-staff</a></li>
+        <li><a href="/Student">Test</a></li>
+        <li><a href="/Staff-Statistics">Staff Statistics</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{%block staffBlock%}
+<div class="container mt-4">
+    <h2>Review Statistics</h2>
+    <div class="mb-3 row">
+        <label for="cohortSelect" class="col-sm-3 col-form-label">Select Cohort:</label>
+        <div class="col-sm-9">
+            <select id="cohortSelect" class="form-select">
+                <option>All Cohorts</option>
+                {% for cohort in cohorts %}
+                    <option value="{{ cohort['cohort'] }}">{{ cohort['cohort'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="moduleSelect" class="col-sm-3 col-form-label">Select Module:</label>
+        <div class="col-sm-9">
+            <select id="moduleSelect" class="form-select">
+            <option>All Modules</option>
+            {% for module in modules %}
+            <option value="{{ module['module'] }}">{{ module['module'] }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="assessmentSelect" class="col-sm-3 col-form-label">Select Assessment Type:</label>
+        <div class="col-sm-9">
+            <select id="assessmentSelect" class="form-select">
+            <option>All Assessments</option>
+            {% for assessment_type in assessment_types %}
+            <option value="{{ assessment_type['assessment_type'] }}">{{ assessment_type['assessment_name'] }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button id="applyFilters" class="btn btn-success">Apply Filters</button>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="searchStudentID" class="col-sm-3 col-form-label">Search by Student ID:</label>
+        <div class="col-sm-7">
+            <input type="text" id="searchStudentID" class="form-control" placeholder="Enter Student ID">
+        </div>
+        <div class="col-sm-2">
+            <button id="searchButton" class="btn btn-primary w-100">Search</button>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-sm-12">
+            <button id="exportButton" class="btn btn-primary w-100">Export Data</button>
+        </div>
+    </div>
+    <table class="table mt-4" id="resultsTable">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Assessment Type</th>
+                <th>Attempts</th>
+                <th>Engagement</th>
+                <th>Performance</th>
+                <th>Module</th>
+                <th>Cohort</th>
+            </tr>
+        </thead>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student['id'] }}</td>
+                    <td>{{ student['username'] }}</td>
+                    <td>{{ student['assessment_type'] }}</td>
+                    <td>{{ student['attempt'] }}</td>
+                    <td>{{ student['engagement'] }}</td>
+                    <td>{{ student['performance'] }}</td>
+                    <td>{{ student['module'] }}</td>
+                    <td>{{ student['cohort'] }}</td>
+                </tr>
+                {% endfor %}
+    </table>
+    <nav aria-label="Table pagination">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#" onclick="changePage(-1)">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="changePage(1)">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+{%endblock%}
+
+{%endblock%}

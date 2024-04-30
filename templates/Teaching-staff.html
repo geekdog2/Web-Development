@@ -1,0 +1,121 @@
+{%extends 'Home.html'%}
+
+{%block mainBlock%}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/Home">AAT</a>
+    </div>
+    <div class="collapse navbar-collapse" id="Navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/Home">Home</a></li>
+        <li><a href="/Teaching-staff">Teaching-staff</a></li>
+        <li><a href="{{ url_for('Student', username='Teacher') }}">Test</a></li>
+        <li><a href="/Staff-Statistics">Staff Statistics</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{%block staffBlock%}
+<div class="container">    <div class="container">
+  
+  <h2> Assessments</h2>
+  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> ID</th>
+        <th> Name</th>
+        <th> Date Created</th>
+        <th> Type</th>
+        <th> Content</th>
+        <th> Name of the assessment</th>
+      </tr>
+    </thead>
+    <tbody>
+  
+  
+              <hr>
+              <form method="post" action="/Teaching-staff/new">
+              <div class="form-group">
+                  <label for="id">id</label>
+                  <input type="text" name="id" placeholder="Assessment ID" class="form-control"
+                  value="{{ request.form['id'] }}">
+              </div>
+                     <div class="form-group">
+                  <label for="name">name</label>
+                  <input type="text" name="name" placeholder="Assessment Name" class="form-control"
+                  value="{{ request.form['name'] }}">
+              </div>
+                     <div class="form-group">
+                  <label for="content">content</label>
+                  <textarea name="content" placeholder="NAME OF ASSESSMENT" class="form-control">
+                      {{ request.form['content'] }}</textarea>
+              </div>
+  
+  
+          <form method="post" action="/Teaching-staff/new">
+          <label for="typeSelect">Select Type:</label>
+          <select id="typeSelect" name="type">
+              <option value="formative">Formative</option>
+              <option value="summative">Summative</option>
+          </select>
+  
+  
+                   <button type="submit" class="btn btn-primary">CREATE</button>
+  
+              </form>
+  
+  <hr>
+  
+       {% for assessments in data %}
+        <tr >
+          <td >
+          {{ assessments['id'] }}
+  
+              <hr>
+      <form action="{{ url_for('delete',get_id=assessments['id']) }}" method="POST">
+      <input type="submit" value="DELETE" class="btn btn-danger btn-sm" onclick="return confirm('ARE YOU SURE?')">
+      </form>
+  
+  
+  
+              <hr>
+  
+              <form method="post" action="{{ url_for('edit', get_id=assessments['id']) }}" >
+      <div class="form-group">
+          <textarea name="content" placeholder="ASSESSMENT CONTENT" class="form-control">{{ request.form['content']}}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  
+  
+  
+          </td>
+            <td> {{ assessments['name'] }}</td>
+  
+          <td> {{ assessments['created'] }}</td>
+          <td> {{ assessments['type'] }}</td>
+          <td> {{ assessments['content'] }}</td>
+          <td> <a href="{{ url_for('StaffSpecificassessment', get_id=assessments['id']) }}">Select to Edit Content</a></td>
+  
+        </tr>
+  
+  
+  
+      {%endfor%}
+    </tbody>
+  </table>
+  </div>
+  </div>
+  
+{%endblock%}
+
+{%endblock%}

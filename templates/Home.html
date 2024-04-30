@@ -1,0 +1,59 @@
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home</title>
+
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Links bootstrap 3.3.5 css js, and jquery.
+    This was taken from getbootstrap.
+    Accessed 18-04-2024
+    http://getbootstrap.com
+    Copyright 2011-2015 Twitter, Inc.
+    Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+     -->
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Enables the use of font-awesome icons.
+    This was taken from w3 school.
+    Accessed 18-04-2024
+    https://www.w3schools.com/icons/fontawesome_icons_intro.asp
+     -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+
+      <!-- Links bootstrap 3.3.5 css js, and jquery.
+      This was taken from getbootstrap.
+      Accessed 18-04-2024
+      http://getbootstrap.com
+      Copyright 2011-2015 Twitter, Inc.
+      Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+       -->
+      </head>
+
+      <body>
+        <div class="container text-center">
+          <div class="page-header">
+            <h1>Automated Assessment Tool</h1>
+          </div>
+             <div class="container">
+          {% for message in get_flashed_messages() %}
+              <div class="alert-danger">{{ message }}</div>
+          {% endfor %}
+      {% block content %}{% endblock %}
+      </div>
+
+        </div>
+        {% block mainBlock%}
+        <div class="text-center">
+          <a href="/Login" class="btn btn-info" role="button">Login</a>
+        </div>
+        {%endblock%}
+      </body>
+    </html>

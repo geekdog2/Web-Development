@@ -1,0 +1,49 @@
+{% extends 'Student.html' %}
+
+{% block studentBlock %}
+
+<div class="container">
+
+    <!-- 学生的个人统计数据 -->
+    <h2>Hi, {{ username }}. Here are your personal statistics!</h2>
+
+    <!-- 表格显示学生的个人统计信息 -->
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Assessment Type</th>
+          <th>Attempts</th>
+          <th>Attempt Date</th>
+          <th>Engagement</th>
+          <th>Performance</th>
+          <th>Rank</th>
+          <th>Comment</th>
+          <th>Export Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td>{{ student['assessment_type'] }}</td>
+            <td>{{ student['attempt'] }}</td>
+            <td>{{ student['attempt_date'] }}</td>
+            <td>{{ student['engagement'] }}</td>
+            <td>{{ student['performance'] }}</td>
+            <td>{{ student['rank'] }}</td>
+            <td>{{ student['comment'] }}</td>
+            <td>
+              <a href="{{ url_for('export_personal_data', username=username, assessment_type=student['assessment_type']) }}" class="btn btn-primary">Export</a>
+            </td>
+            
+          </tr>
+          {% endfor %}      
+      </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('export_personal_all_data', username=username) }}" class="btn btn-primary">Export All Data</a>
+    </div>
+        
+</div>
+
+{% endblock %}

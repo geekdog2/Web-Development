@@ -1,0 +1,31 @@
+{%extends 'Student.html'%}
+
+{%block studentBlock%}
+<h1 style="text-align: center;">Assessment Results</h1>
+<div class="container">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> Assessment ID</th>
+        <th> Total Correct Answers </th>
+        <th> Mark</th>
+        <th> Feedback</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for assessments in ass %}
+      <tr>
+        <td >
+        {{ assessments['assessmentid'] }}
+        </td>
+        <td> {{ assessments['count'] }}</td>
+        <td> {{ assessments['mark'] }}</td>
+        <td> <a href="{{ url_for('results', get_id=assessments['id'], username=username) }}">Feedback</a></td>
+      </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+{%endblock%}
